@@ -2,47 +2,64 @@ let ville;
 let tabPoint = [];
 let index = 1;
 
+/**
+ * Init the map frame.
+ */
 function initialize() {
     $("#validation").click(function () {
-            if ($("#input").html !== "") {
-                $.ajax({
-                    url: "https://api.openweathermap.org/data/2.5/weather?q=" + input.value + "&appid=3078318dd0d0534083752a2e64525eb6&lang=fr",
-                    type: "GET",
-                    datatyp: "json",
-                    success: function (result) {
-                        afficher(result.coord);
-                    },
-                    error: function () {
-                        console.log("error");
+        if ($("#input").html !== "") {
+            $.ajax({
+                url: "https://api.openweathermap.org/data/2.5/weather?q=" + input.value + "&appid=3078318dd0d0534083752a2e64525eb6&lang=fr",
+                type: "GET",
+                datatyp: "json",
+                success: function (result) {
+                    afficher(result.coord);
+                },
+                error: function () {
+                    console.log("error");
 
-                    }
-                });
-            }
+                }
+            });
         }
-    )
+    })
 }
 
-initialize();
 
+/**
+ *
+ * @param point
+ */
 function afficherPoint(point){
+    let divGlobal = document.createElement("div");
+    divGlobal.className = "pointGlobal"
     let span = document.createElement("span");
-    span.innerHTML = "<br>"+point;
-    span.style.fontSize = "8px"
+    span.innerHTML = point;
+    span.style.display = "none";
+    span.style.fontSize = "8px";
     let div = document.createElement("h2");
-    let coord = $(span).html().slice(4);
+    let coord = $(span).text()
     coord = coord.split(",");
     coord = [parseFloat(coord[0]),parseFloat(coord[1])]
-    div.innerHTML = afficherVille(coord);
-    $(span).click(function(){
-        let coord = $(this).html().slice(4).split(",");
+    afficherVille(coord, div);
+    if(div.innerHTML === ""){
+        div.innerHTML = "Inconnue"
+    }
+    $(divGlobal).click(function(){
+        let coord = $($(this).children()[0]).text().split(",");
         coord.forEach(elem => {
             parseFloat(elem);
         });
         afficher(coord, true)
     })
-    $("#point").append($(span)).append($(div));
+    $(divGlobal).append($(span)).append($(div));
+    $("#point").append($(divGlobal));
 }
 
+/**
+ *
+ * @param data
+ * @param tp
+ */
 function afficher(data,tp = false){
     ville = data;
     let mapPrevious = document.getElementById("map");
@@ -56,8 +73,6 @@ function afficher(data,tp = false){
     }else{
         map = L.map('map').setView([data.lat, data.lon], 10);
     }
-
-
     osmLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         maxZoom: 19
     });
@@ -69,17 +84,17 @@ function afficher(data,tp = false){
     })
 }
 
-function afficherVille(coord){
+function afficherVille(coord, div){
     const settings = {
         "crossDomain": true,
-        "async" : false,
         "url": "https://geocode.xyz/"+coord[0] +","+coord[1]+"?json=1",
-        "method": "GET",
     };
 
-    $.ajax(settings).done(function (response) {
-        let city = response.city;
-        console.log(city)
-        return city;
+    $.get(settings)
+        .done(function (response) {
+        div.innerHTML = response.city;
     });
 }
+
+
+initialize();
