@@ -5,7 +5,7 @@ function initialize() {
     $("#validation").click(function () {4
             if ($("#input").html !== "") {
                 $.ajax({
-                    url: "http://api.openweathermap.org/data/2.5/weather?q=" + input.value + "&appid=3078318dd0d0534083752a2e64525eb6&lang=fr",
+                    url: "https://api.openweathermap.org/data/2.5/weather?q=" + input.value + "&appid=3078318dd0d0534083752a2e64525eb6&lang=fr",
                     type: "GET",
                     datatyp: "json",
                     success: function (result) {
