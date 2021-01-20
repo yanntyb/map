@@ -13,7 +13,7 @@ function initialize() {
                         if(!choosed){
                             let map =  L.map('map').setView([ville.lat, ville.lon], 10);// LIGNE 18
 
-                            let osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
+                            let osmLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
                                 maxZoom: 19
                             });
                             map.addLayer(osmLayer);
@@ -32,7 +32,7 @@ function initialize() {
                             document.body.append(map);
                             map =  L.map('map').setView([ville.lat, ville.lon], 10);// LIGNE 18
 
-                            osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
+                            osmLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
                                 maxZoom: 19
                             });
                             map.addLayer(osmLayer);
