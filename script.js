@@ -27,15 +27,20 @@ initialize();
 function afficherPoint(point){
     let span = document.createElement("span");
     span.innerHTML = "<br>"+point;
+    span.style.fontSize = "8px"
+    let div = document.createElement("h2");
+    let coord = $(span).html().slice(4);
+    coord = coord.split(",");
+    coord = [parseFloat(coord[0]),parseFloat(coord[1])]
+    div.innerHTML = afficherVille(coord);
     $(span).click(function(){
         let coord = $(this).html().slice(4).split(",");
         coord.forEach(elem => {
             parseFloat(elem);
         });
-        console.log(coord)
         afficher(coord, true)
     })
-    $("#point").append($(span));
+    $("#point").append($(span)).append($(div));
 }
 
 function afficher(data,tp = false){
@@ -62,4 +67,19 @@ function afficher(data,tp = false){
         afficherPoint(coord);
         L.marker(coord).addTo(map);
     })
+}
+
+function afficherVille(coord){
+    const settings = {
+        "crossDomain": true,
+        "async" : false,
+        "url": "https://geocode.xyz/"+coord[0] +","+coord[1]+"?json=1",
+        "method": "GET",
+    };
+
+    $.ajax(settings).done(function (response) {
+        let city = response.city;
+        console.log(city)
+        return city;
+    });
 }

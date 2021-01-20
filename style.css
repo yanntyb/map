@@ -56,7 +56,7 @@ body {
     width: 10vw;
     height: 100vh;
     background-color: #AED6F1;
-    z-index: 3;
+    z-index: 10;
     position: absolute;
     right: 0;
 }
