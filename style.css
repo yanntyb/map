@@ -17,16 +17,6 @@ body {
     position: absolute;
 }
 
-#chooseCity{
-    position: absolute;
-    width: 100vw;
-    height: 90vh;
-    display: flex;
-    top: 10vh;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
 
 #action {
     position: absolute;
@@ -35,33 +25,25 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: #AED6F1;
+    background-color: #AAB7B8;
     padding-top: 5vh;
-    z-index: 2;
+    z-index: 100000000;
+    box-shadow: 0px 0px 8px 5px rgba(0,0,0,0.4);
 }
 
-#modal {
-    background-color: #D4E6F1;
-    position : absolute;
-    width : 50vw;
-    height : 50vw;
-    display : flex;
-    flex-direction : row;
-    justify-content : center;
-    align-items: center;
-    z-index: 2000000;
-}
 
 #point {
     width: 10vw;
     height: 93vh;
-    background-color: #AED6F1;
-    z-index: 10000;
+    background-color: #CCD1D1;
+    z-index: 10000000;
     position: absolute;
     right: 0;
     top: 7vh;
     overflow : scroll;
+    box-shadow: 0px 0px 8px 5px rgba(0,0,0,0.4);
 }
+
 
 #controle{
     position : absolute;
@@ -73,10 +55,38 @@ body {
 }
 
 h2{
+    margin-left: 2vw;
+    margin-top: 1vh;
     font-size: 1vw;
     font-style: oblique;
 }
 
 h2:hover{
+    color: indianred;
+}
+
+#controle{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#modal{
+    width: 50vh;
+    height: 50vh;
+    margin: auto;
+    background-color: blanchedalmond;
+    z-index: 100000000;
+    box-shadow: 0px 0px 8px 5px rgba(0,0,0,0.4);
+    display: none;
+}
+
+#close {
+    margin-left: 0.5vw;
+    margin-top: 0.5vw;
+}
+
+#close:hover{
     color: indianred;
 }
