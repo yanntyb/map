@@ -2,6 +2,7 @@ let ville;
 let tabPoint = [];
 let index = 1;
 let indexSelected = [0,0];
+let selected = false;
 /**
  * Init the map frame.
  */
@@ -23,7 +24,6 @@ function initialize() {
         }
     })
 }
-
 
 /**
  *
@@ -99,10 +99,10 @@ function afficherVille(coord, div){
 }
 
 function distance(coord1, coord2) {
-    let lat1 = coord1[0];
-    let lon1 = coord1[1];
-    let lat2 = coord2[0];
-    let lon2 = coord2[1];
+    let lat1 = coord1[0][0];
+    let lon1 = coord1[0][1];
+    let lat2 = coord2[0][0];
+    let lon2 = coord2[0][1];
     if ((lat1 === lat2) && (lon1 === lon2)) {
         return 0;
     }
@@ -111,7 +111,9 @@ function distance(coord1, coord2) {
         let radlat2 = Math.PI * lat2/180;
         let theta = lon1-lon2;
         let radtheta = Math.PI * theta/180;
-        let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        let a = Math.sin(radlat1) * Math.sin(radlat2);
+        let b = Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        let dist = a + b;
         if (dist > 1) {
             dist = 1;
         }
@@ -119,13 +121,15 @@ function distance(coord1, coord2) {
         dist = dist * 180/Math.PI;
         dist = dist * 60 * 1.1515;
         dist = dist * 1.609344;
-        console.log(typeof(dist));
         console.log(dist);
         return dist;
     }
 }
 
 $("#calcule").click(function(){
+    $("#distanceResult").css({
+        "display" : "none"
+    })
     $("#modal").css({
         "display": "block"
     })
@@ -133,9 +137,13 @@ $("#calcule").click(function(){
         $("#modal").css({
             "display": "none"
         })
+        $("#distanceResult").html("");
     })
     defineSelectOption();
     $("#calculerDistance").click(function(){
+        $("#distanceResult").css({
+            "display" : "block"
+        })
         calcule();
     });
 
@@ -144,6 +152,7 @@ $("#calcule").click(function(){
 
 function defineSelectOption(){
     let input = document.getElementsByClassName("inputVille");
+    $("option").remove()
     for(let i=0; i<=1; i++) {
         for (let j of tabPoint) {
             let select = document.createElement("option");
@@ -153,8 +162,8 @@ function defineSelectOption(){
             input[i].append(select);
         }
         input[i].addEventListener("change", function(){
-            let index = this.selectedIndex;
-            indexSelected[i] = index;
+            let indexselected = this.selectedIndex;
+            indexSelected[i] = indexselected;
         })
     }
 }
@@ -168,7 +177,7 @@ function calcule(){
         })
     }
     let distanceCalc = distance(coord[0], coord[1]);
-    console.log(distanceCalc)
+    $("#distanceResult").html(distanceCalc.toFixed(3) + " Km");
 }
 
 
